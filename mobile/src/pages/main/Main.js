@@ -9,8 +9,18 @@ function Main() {
         const votacoesAbertas = await api.get("/votacoes");
         // console.log(votacoesAbertas);
         setVotacoes(votacoesAbertas.data);
+        return votacoesAbertas.data;
     }
-    loadVotacoes();
+    async function updateVotos(id, callback){
+        await api.put('/votar',{idVotacao: id})
+            .then(resp => {
+                callback(resp);
+            }).catch(err => callback(err));
+    }
+    useEffect(()=>{
+        loadVotacoes();
+    },[]);
+
     return (
         <>
             <FlatList
@@ -21,9 +31,11 @@ function Main() {
                         titulo={item.assunto}
                         resumo={item.resumo} 
                         votos={item.votos}
+                        updateVotos={updateVotos}
+                        idVotacao={item.id}
                     />
                 }
-                keyExtractor={item => item.id} 
+                keyExtractor={item => item.id+""} 
             />
         </>
     );

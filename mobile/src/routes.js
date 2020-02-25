@@ -3,15 +3,15 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import Main from './pages/main/Main';
 
-const Routes = createAppContainer(
-    createStackNavigator({
+const Paginas = createStackNavigator({
         Main: {
             screen: Main,
             navigationOptions: {
                 title: "Votações Abertas"
             }
         }
-    },{
+    },
+    {
         defaultNavigationOptions: {
             headerTintColor: '#fff',
             headerBackTitleVisible: false,
@@ -19,7 +19,7 @@ const Routes = createAppContainer(
                 backgroundColor: '#7e57c2',
             }
         }
-    })
+    }
 );
 
-export default Routes;
+export default createAppContainer(Paginas);
