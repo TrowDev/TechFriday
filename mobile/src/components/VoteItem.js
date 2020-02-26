@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Alert} from 'react-native';
-import styles from './style';
+import styles from '../pages/votacoesabertas/style';
 import Icon from 'react-native-vector-icons/FontAwesome';
 Icon.loadFont();
 
@@ -32,7 +32,7 @@ export default function Item(props){
                     disabled={heartStatus}
                     activeOpacity={1}
                     onPress={()=>{
-                        // setHeartStatus(true);
+                        setHeartStatus(true);
                         setVotos(votos+1);
                         setIconName('heart');
                     }} >

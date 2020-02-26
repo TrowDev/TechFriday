@@ -17,7 +17,8 @@ module.exports = {
         })
             .then(resp => {
                 if (resp.length == 0) {
-                    res.status(404).json({
+                    res.json({
+                        status: 404,
                         message: "Nenhum usuário encontrado."
                     });
                 } else {
@@ -38,10 +39,35 @@ module.exports = {
         if (usuario) {
             res.json(usuario);
         } else {
-            res.status(404).json({
+            res.json({
+                status: 404,
                 message: "Usuário não encontrado!"
             });
         }
+        return;
+    },
+    async logIn(req, res){
+        const { usuario, senha } = req.body;
+        const userInfo = await User.findOne({
+            where: {
+                usuario: usuario,
+                senha: senha
+            }
+        });
+        if(!userInfo){
+            res.status(200).json({
+                status: 404,
+                message: "Usuário/Senha não correspondem a nenhum usuário."
+            });
+            return;
+        }
+        res.json({
+            status: 200,
+            message: "Login realizado com sucesso!",
+            userid: userInfo.id,
+            usuario: userInfo.usuario,
+            token: userInfo.token
+        });
         return;
     },
     async store(req, res) {
@@ -65,7 +91,8 @@ module.exports = {
                     updatedAt: new Date()
                 }).then(resp => res.status(201).json(resp)).catch(err => res.json(err));
             } else {
-                res.status(409).json({
+                res.json({
+                    status: 409,
                     message: "Usuário ou E-mail já registrado."
                 });
             }
@@ -81,7 +108,8 @@ module.exports = {
             }
         });
         if(!usuario){
-            res.status(404).json({
+            res.json({
+                status: 404,
                 message: "Usuário não encontrado."
             });
             return;
@@ -112,7 +140,8 @@ module.exports = {
                     message: "Usuário deletado com sucesso!"
                 });
             }else{
-                res.status(404).json({
+                res.json({
+                    status: 404,
                     message: "Usuário não encontrado."
                 });
             }

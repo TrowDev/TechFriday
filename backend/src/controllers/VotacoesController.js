@@ -85,7 +85,8 @@ module.exports = {
         return;
     },
     async update(req, res) {
-        const { idVotacao } = req.body;
+        const { idVotacao, idUsuario, token } = req.body;
+        console.log("IDUser: "+idUsuario+" \n Token: "+token);
         const votacaoExiste = await Votacoes.findOne({ where: { id: idVotacao } });
         if (votacaoExiste) {
             Votacoes.increment({

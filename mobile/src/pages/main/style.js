@@ -1,41 +1,22 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-    item: {
+    fundoApp:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        display: "flex",
         flex: 1,
-        borderStyle: "solid",
-        borderColor: '#bdbdbd',
-        backgroundColor: '#fafafa',
-        borderWidth: 0.4,
-        padding: 20,
-        marginVertical: 3,
-        marginHorizontal: 6
+        backgroundColor: '#eeeeee',
     },
-    autor:{
-        fontSize: 14,
-        fontWeight: "bold",
-        color: '#bdbdbd'
+    logoImg: {
+        width: 300,
+        height: 300,
+        resizeMode: 'contain'
     },
-    titulo:{
-        fontSize: 14,
-        fontWeight: "bold"
-    },
-    resumo: {
-        fontSize: 12,
-        fontStyle: "italic"
-    },
-    votar: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'flex-start'
-    },
-    votos: {
-        color: '#000',
-        fontSize: 10,
-        marginRight: 5
-    },
-    heart: {
-        color: 'red',
+    loadingGif: {
+        width: 40,
+        height: 40,
+        resizeMode: 'contain'
     }
 });
 

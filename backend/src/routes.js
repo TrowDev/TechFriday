@@ -13,6 +13,7 @@ routers.delete('/deletarVotacao', VotacoesController.destroy);
 // rotas de controle para User.
 routers.get('/usuarios', UserController.index);
 routers.get('/usuario', UserController.showByID);
+routers.post('/login', UserController.logIn);
 routers.post('/usuario', UserController.store);
 routers.put('/atualizarUsuario', UserController.update);
 routers.delete('/deletarUsuario', UserController.destroy);

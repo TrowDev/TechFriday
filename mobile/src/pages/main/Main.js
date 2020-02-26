@@ -1,44 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, Button, FlatList, ScrollView } from 'react-native';
-import api from '../../services/api';
-import Item from './Item';
+import React from 'react';
+import { View, Image } from 'react-native';
+import { StackActions, NavigationActions } from 'react-navigation';
 
-function Main() {
-    const [votacoes, setVotacoes] = useState([]);
-    async function loadVotacoes() {
-        const votacoesAbertas = await api.get("/votacoes");
-        // console.log(votacoesAbertas);
-        setVotacoes(votacoesAbertas.data);
-        return votacoesAbertas.data;
+import storage from '../../services/storage';
+import styles from './style';
+import Logo from '../../public/img/TechFriday.png';
+import Loading from '../../public/gifs/loading.gif';
+
+export default function Main({ navigation }){
+    
+    const KEY_STORAGE = '@TechFriday:dadosLogin';
+
+    async function isLogged(){
+        return await storage.get(KEY_STORAGE).then(ret => ret!==null);
     }
-    async function updateVotos(id, callback){
-        await api.put('/votar',{idVotacao: id})
-            .then(resp => {
-                callback(resp);
-            }).catch(err => callback(err));
+
+    async function getLoginInfo(){
+        const retorno = await storage.get(KEY_STORAGE).then(ret => {
+            return ret;
+        });
+        return retorno;
     }
-    useEffect(()=>{
-        loadVotacoes();
-    },[]);
+
+    async function loadPage(){
+        const logado = await isLogged();
+        if(logado){
+            const dados = await getLoginInfo();
+            const resetNavigation = StackActions.reset({
+                index: 0,
+                key: null,
+                actions: [NavigationActions.navigate({routeName: 'VotacoesAbertas', params: {
+                    usuario: dados.usuario,
+                    userID: dados.userID,
+                    token: dados.token
+                }})]
+            });
+            navigation.dispatch(resetNavigation);
+        } else {
+            const resetNavigation = StackActions.reset({
+                index: 0,
+                key: null,
+                actions: [NavigationActions.navigate({routeName: 'Login'})],
+            });
+            navigation.dispatch(resetNavigation);
+        }
+    }
+
+    // loadPage();
+
+    setTimeout(()=>{
+        loadPage();
+    },4000);
 
     return (
         <>
-            <FlatList
-                data={votacoes}
-                renderItem={({ item }) => 
-                    <Item 
-                        autor={item.usuario.usuario}
-                        titulo={item.assunto}
-                        resumo={item.resumo} 
-                        votos={item.votos}
-                        updateVotos={updateVotos}
-                        idVotacao={item.id}
-                    />
-                }
-                keyExtractor={item => item.id+""} 
-            />
+            <View style={styles.fundoApp}>
+                <Image source={Logo} style={styles.logoImg} />
+                <Image source={Loading} style={styles.loadingGif} />
+            </View>
         </>
     );
-}
 
-export default Main;
+}
