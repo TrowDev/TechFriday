@@ -1,4 +1,4 @@
-# TechFriday
+# TechFriday - NodeJS + React-Native
 A ideia do aplicativo é, de forma simples e objetiva, votar em qual tema você gostaria de ver em uma apresentação da sua empresa. (Quando a empresa promove palestras sobre diversos assuntos).<br>
 Assim, possibilitamos que todos votem e o tema mais votado seja apresentado, o que faz com que as pessoas que votaram tenham mais interesse em ver sobre o tema escolhido.<br>
 O aplicativo foi feito utilizando React-native e o Back-end foi feito utlizando NodeJS.
